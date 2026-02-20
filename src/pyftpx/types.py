@@ -6,6 +6,11 @@ from enum import IntEnum
 
 MAGIC = b"PFXP"
 VERSION = 1
+COMMON_HEADER_LEN = 24
+DEFAULT_PORT = 40404
+DEFAULT_CHUNK_SIZE = 1024
+DEFAULT_TIMEOUT_SECONDS = 2.0
+MAX_RETRIES = 8
 
 
 class FrameType(IntEnum):
@@ -31,3 +36,7 @@ class FrameHeader:
     transfer_id: int
     seq: int
     payload_len: int
+
+
+class ProtocolError(Exception):
+    pass

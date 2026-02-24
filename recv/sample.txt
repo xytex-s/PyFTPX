@@ -1,1 +1,1 @@
-PyFTPX integration test payload
+PyFTPX smoke test payload

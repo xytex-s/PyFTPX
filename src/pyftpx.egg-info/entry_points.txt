@@ -1,2 +1,3 @@
 [console_scripts]
 pyftpx = pyftpx.cli:main
+pyftpx-smoke = pyftpx.smoke_test:main

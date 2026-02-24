@@ -1,9 +1,11 @@
+LICENSE
 README.md
 pyproject.toml
 src/pyftpx/__init__.py
 src/pyftpx/cli.py
 src/pyftpx/codec.py
 src/pyftpx/protocol.py
+src/pyftpx/smoke_test.py
 src/pyftpx/transfer.py
 src/pyftpx/types.py
 src/pyftpx.egg-info/PKG-INFO

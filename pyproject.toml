@@ -23,6 +23,7 @@ dependencies = []
 
 [project.scripts]
 pyftpx = "pyftpx.cli:main"
+pyftpx-smoke = "pyftpx.smoke_test:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

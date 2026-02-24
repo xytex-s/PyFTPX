@@ -52,3 +52,10 @@ $env:PYTHONPATH='src'; .\.venv\Scripts\python.exe -m pyftpx.smoke_test
 ```
 
 This runs the same local sender/receiver test path and verifies file hash integrity.
+
+If you install the package in editable mode, you can use the console alias:
+
+```powershell
+.\.venv\Scripts\pip.exe install -e .
+pyftpx-smoke
+```

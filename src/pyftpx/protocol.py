@@ -169,5 +169,20 @@ def parse_fin_ack_payload(payload: bytes) -> tuple[bool, bytes]:
     return tlvs[0x01] == b"\x01", tlvs[0x02]
 
 
+def build_abort_payload(code: int, message: str) -> bytes:
+    if code < 0 or code > 0xFFFF:
+        raise ProtocolError("abort code out of range")
+    return encode_tlvs([(0x01, struct.pack("!H", code)), (0x02, message.encode("utf-8"))])
+
+
+def parse_abort_payload(payload: bytes) -> tuple[int, str]:
+    tlvs = decode_tlvs(payload)
+    if 0x01 not in tlvs or 0x02 not in tlvs:
+        raise ProtocolError("abort payload missing required tags")
+    if len(tlvs[0x01]) != 2:
+        raise ProtocolError("abort code malformed")
+    return struct.unpack("!H", tlvs[0x01])[0], tlvs[0x02].decode("utf-8", errors="replace")
+
+
 def is_frame_type(value: int, expected: FrameType) -> bool:
     return int(value) == int(expected)

@@ -6,10 +6,12 @@ import pytest
 
 from pyftpx.protocol import Offer
 from pyftpx.protocol import build_data_payload
+from pyftpx.protocol import build_abort_payload
 from pyftpx.protocol import build_offer_payload
 from pyftpx.protocol import build_ranges_payload
 from pyftpx.protocol import decode_tlvs
 from pyftpx.protocol import encode_tlvs
+from pyftpx.protocol import parse_abort_payload
 from pyftpx.protocol import parse_data_payload
 from pyftpx.protocol import parse_offer_payload
 from pyftpx.protocol import parse_ranges_payload
@@ -77,3 +79,17 @@ def test_parse_ranges_payload_rejects_size_mismatch() -> None:
     malformed = struct.pack("!HII", 2, 1, 1)
     with pytest.raises(ProtocolError, match="ranges payload size mismatch"):
         parse_ranges_payload(malformed)
+
+
+def test_abort_payload_round_trip() -> None:
+    payload = build_abort_payload(1001, "protocol error")
+    code, message = parse_abort_payload(payload)
+
+    assert code == 1001
+    assert message == "protocol error"
+
+
+def test_parse_abort_payload_rejects_malformed_code() -> None:
+    payload = encode_tlvs([(0x01, b"\x01"), (0x02, b"bad")])
+    with pytest.raises(ProtocolError, match="abort code malformed"):
+        parse_abort_payload(payload)
